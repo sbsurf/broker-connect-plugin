@@ -1,0 +1,44 @@
+<div id="broker_sidebar">
+  <h3>Lead</h3>
+
+  <% form_for broker_worksheet, :url => {:action => :update, :controller => :issue} do |f| %>
+
+      <table>
+        <tr>
+          <td><b>Broker</b></td>
+          <td> <%= broker_worksheet.broker.andand.name %></td>
+        </tr>
+        <tr>
+          <td><b>PNMAC Contact</b></td>
+          <td>
+            <%= collection_select(:broker_worksheet,
+                                  :loan_resolution_specialist_id,
+                                  LoanResolutionSpecialist.find(:all, :group => "name"),
+                                  :id,
+                                  :name, {}, {:onchange => "#{remote_function(:success => "", :with => "'broker_worksheet[id]=#{broker_worksheet.id}'+'&broker_worksheet[loan_resolution_specialist_id]=' + j$(\"#broker_worksheet_loan_resolution_specialist_id\").val()", :url => {:action => :update_broker_sidebar, :controller => :broker_worksheet, :id => broker_worksheet.issue_id})}"}) %>
+          </td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <td><b> Phone</b></td>
+          <td> <%= broker_worksheet.loan_resolution_specialist.andand.phone %></td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <td><b> Email</b></td>
+          <td style="font-size:.95em;"> <%= broker_worksheet.loan_resolution_specialist.andand.email %></td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <td><b>Lead Created</b></td>
+          <td> <%= broker_worksheet.lead_created_on %></td>
+        </tr>
+        <tr></tr>
+        <tr></tr>
+        <tr>
+          <td><b>Cash Offered</b></td>
+          <td> $<%= broker_worksheet.cash_offered.andand.round || 0 %></td>
+        </tr>
+      </table>
+  <% end %>
+</div>

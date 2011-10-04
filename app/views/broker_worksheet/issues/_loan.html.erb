@@ -1,0 +1,38 @@
+<div id="loan" class="">
+  <fieldset>
+    <legend>Loan</legend>
+        <%
+           loss_mitigation_activity = loan.loss_mitigation_activities.andand.last
+        %>
+    <div  class="float-container" >
+            <table style="float:left;padding-right:1px;width:48%; border-right: 1px dotted #888;">
+
+              <tr><td><b>Delinquency</b></td><td> <div class="readonly-field"  style="float:right;width:100px"><%= loan.payment_status_type.andand.name %></div></td></tr>
+                <tr><td><b>Last Payment Date</b></td><td> <div style="float:right;width:100px" class="readonly-field"> <%= loan.payments.andand.last.andand.effective_on  || "None"%></div></td></tr>
+            </table>
+
+            <table style="float:right;padding-right:1px;width:48%;">
+
+              <tr><td><b>Current Loss Mitigation Path</b></td><td> <div class="readonly-field" style="float:right;width:100px"> <%= loss_mitigation_path_in_words(loss_mitigation_activity.andand.code)  %></div></td></tr>
+              <tr><td><b>Current Loss Mitigation Path Status</b></td><td> <div style="float:right;width:100px" class="readonly-field"> <%= loss_mitigation_path_status_in_words(loss_mitigation_activity.andand.status_code) %></div></td></tr>
+            </table>
+
+           <table style="float:left;padding-right:1px;width:48%; border-right: 1px dotted #888;">
+             <tr><td><b>Denied for MOD</b></td><td> <div style="float:right;width:100px" class="readonly-field"> <%= loan.modifications.andand.last.andand.is_denied ? "Yes" : "No" %></div></td></tr>
+             <tr><td><b>MOD Denial Date</b></td><td> <div style="float:right;width:100px" class="readonly-field" > <%= loan.modifications.andand.last.andand.status_changed_on || "&nbsp;" %></div></td></tr>
+           <tr><td><b>Notice of Default Date</b></td><td> <div style="float:right;width:100px" class="readonly-field"> <%= loan.foreclosures.andand.last.andand.default_on || "&nbsp;" %></div></td></tr>
+           <tr><td><b>Bankruptcy Status</b></td><td> <div class="readonly-field"  style="float:right;width:100px"><%= bankruptcy_status_code_to_s loan.bankruptcies.andand.last.andand.status_code or '&nbsp;'%></div></td></tr>
+           <tr><td><b>Bankruptcy Completion Date</b></td><td> <div class="readonly-field"  style="float:right;width:100px"><%= loan.bankruptcies.andand.last.andand.ended or '&nbsp;'%></div></td></tr>
+           </table>
+
+       <table style="float:right;padding-right:1px;width:48%; ">
+         <tr><td><b>Active Foreclosure</b></td><td> <div style="float:right;width:100px" class="readonly-field"> <%= loan.foreclosures.andand.last.andand.status_code == "A" ? "Yes": "No" %></div></td></tr>
+
+
+       <tr><td><b>Foreclosure Scheduled Sale Date</b></td><td> <div style="float:right;width:100px" class="readonly-field"> <%= loan.foreclosures.andand.last.andand.sale_scheduled_on || "&nbsp;"  %></div></td></tr>
+       <tr><td><b>Foreclosure Actual Sale Date</b></td><td> <div style="float:right;width:100px" class="readonly-field"> <%= loan.foreclosures.andand.last.andand.sale_completed_on || "&nbsp;" %></div></td></tr>
+         
+       </table>
+    </div>
+  </fieldset>
+</div>

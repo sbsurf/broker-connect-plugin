@@ -1,0 +1,16 @@
+<% form_for :issue, @issue,
+            :url => {:action => 'update', :id => @issue},
+            :html => {:id => 'issue-form',
+            :class => nil,
+            :method => :put} do |f| %>
+    <%= error_messages_for 'issue', 'time_entry' %>
+    <h2><%= @issue.tracker.name %> (<%= @issue.subject %> - <%= @issue.loan.borrower.andand.name %>)</h2>
+    <div class="<%= @issue.css_classes %> details">
+    
+    <%= render :partial => 'broker_worksheet/issues/sidebar', :locals => {:issue => @issue, :allowed_statuses => @allowed_statuses} %>
+    <%= render :partial => 'broker_worksheet/issues/checklist', :locals => {:f => f, :loan => @issue.loan, :disable_form => false} %>
+    
+    <%= f.hidden_field :lock_version %>
+    <%= submit_tag l(:button_submit) %>
+    </div>
+<% end %>

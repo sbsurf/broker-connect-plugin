@@ -1,0 +1,126 @@
+@media print {
+
+    #content {
+        background-color: white;
+        padding: 0px 0px 0px 0px;
+        margin: 0px 0px 0px 0px;        
+        display: inline;
+    }
+
+    .form {        
+        display: inline-block;
+        top: 0px;
+        left: 0px;
+        position: absolute;
+        width: 65%;
+        font-size: 65%;
+        margin: 0px 0px 0px 0px;
+    }
+
+    li {
+        font-size: 65%;
+    }
+
+    #sidebar {
+        display: inline;        
+        width: 30%;
+        font-size: 65%;
+        border: 2px solid black;
+        padding: 2px 2px 2px 2px;       
+    }
+
+    .pad-inner {
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+    }
+
+    .important {
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+    }
+
+    .box {
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+    }
+
+    .rounded {
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+    }
+
+    .tab5 {
+        margin: 2px 2px 2px 2px;
+        padding: 2px 2px 2px 2px;
+    }
+
+    body {
+        padding: 0px 0px 0px 0px;
+        margin: 0px 0px 0px 0px;        
+    }
+
+    #denial_reasons_common {
+        padding: 0px 0px 0px 0px;
+        margin: 0px 0px 0px 0px;        
+    }
+
+    #denial_reasons_for_basis {
+        padding: 0px 0px 0px 0px;
+        margin: 0px 0px 0px 0px; 
+    }
+
+    #footer {
+        display: none;
+    }
+
+    #list_of_denial_routes_div {
+        padding: 2px 2px 2px 2px;
+        margin: 2px 2px 2px 2px;       
+    }
+
+    .yes_no {
+        padding: 5px 5px 5px 5px;
+        margin: 5px 5px 5px 5px;
+        width: 150px;
+    }
+
+    .yes {        
+        padding: 5px 5px 5px 5px;
+        margin: 2px 2px 2px 2px;
+        width: 60px;
+     }
+
+    .no {        
+        padding: 5px 5px 5px 5px;
+        margin: 2px 2px 2px 2px;
+        width: 60px;
+     }
+
+    .ui-state-default .ui-icon {        
+        display: inline;
+    }
+
+    .ui-state-active .ui-icon { 
+        display: inline;
+
+    }
+
+    #financials_detail_borrower {
+        display: block;
+    }
+
+    #payment_detail_borrower {
+        display: block;
+    }
+
+    .group-detail {
+        display: none;
+    }
+
+
+}
+
+
+
+
+

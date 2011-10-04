@@ -1,0 +1,14 @@
+# English strings go here for Rails i18n
+en:
+  field_agent_name: Agent Name
+  field_agent_phone: Agent Phone
+  field_agent_email: Agent Email
+  field_loan_resolution_specialist: Loan Resolution Specialist
+  field_lead_created_on: Lead Created Date
+  field_occupancy_type: Agent Determined Occupancy
+  field_first_contact_attempted_on: First Contact Attempted Date
+  field_contact_on: Contact Date
+  field_contact_relationship_type: Contact Relationship
+  field_broker_contact_response_type: Desired Mod. Path
+  field_cash_offered: Cash Offered
+  field_broker_summary_notes: Notes

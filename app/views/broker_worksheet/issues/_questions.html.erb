@@ -1,0 +1,128 @@
+<% fields_for 'issue[broker_worksheet]', broker_worksheet do |bw_fields| %>
+    <% content_for :header_tags do %>
+        <%= javascript_include_tag 'jquery-limitMaxLength', :plugin => "redmine_broker_connect" %>
+    <% end %>
+    <script type="text/javascript">
+        jQuery().ready(function() {
+            var onEditComments = function(remaining) {
+                jQuery(this).siblings('.charsRemaining').text("Characters remaining: " + remaining);
+
+                if (remaining > 0) {
+                    jQuery(this).css('background-color', 'white');
+                }
+            };
+
+            var onLimitComments = function() {
+            };
+
+            jQuery('textarea[maxlength]').limitMaxLength({
+                onEdit: onEditComments,
+                onLimit: onLimitComments
+            });
+            jQuery('.date').datepicker(
+                    {
+                        showOn: 'button',
+                        buttonImage: '/plugin_assets/redmine_broker_connect/images/calendar.gif',
+                        buttonImageOnly: false,
+                        buttonText: "Click to change to a different date",
+                        autoSize: true
+                    });
+        });
+    </script>
+
+    <div class="">
+      <fieldset class="">
+        <legend>Contact Report</legend>
+        <div style="float:right;width:55%;margin-right:5%;">
+          <fieldset>
+            <legend>Agent</legend>
+            <br>
+            <label class="input-text-label" for="broker_worksheet_agent_name"><%= l(:field_agent_name) %></label>
+            <%= bw_fields.text_field :agent_name, :size => 25, :class => 'input-text-field' %>
+            <br>
+            <label class="input-text-label" for="broker_worksheet_agent_phone"><%= l(:field_agent_phone) %> </label>
+            <%= bw_fields.text_field :agent_phone, :size => 25, :class => 'input-text-field' %>
+            <br>
+            <label class="input-text-label" for="broker_worksheet_agent_email"><%= l(:field_agent_email) %> </label>
+            <%= bw_fields.text_field :agent_email, :size => 25, :class => 'input-text-field' %>
+          </fieldset>
+        </div>
+
+        <div style="width:40%">
+          <table>
+            <tr>
+              <td>
+                <b>First Contact Attempted</b></td>
+              <td> <%= bw_fields.text_field :first_contact_attempted_on, :class => "readonly-field date" %>
+            </tr>
+            <tr>
+              <td>
+                <b>First Contacted</b></td>
+              <td> <%= bw_fields.text_field :contact_on, :class => "readonly-field date" %>
+
+            </tr>
+
+            <tr>
+              <td>
+                <b>Contact Relationship</b></td>
+              <td><%= bw_fields.collection_select(:contact_relationship_type_id,
+                                                  ContactRelationshipType.find(:all, :order => 'name'),
+                                                  :id,
+                                                  :name,
+                                                  {:include_blank => true},
+                                                  :style => 'width:100%;') %>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <b>Occupancy</b></td>
+              <td><%= bw_fields.collection_select(:occupancy_type_id,
+                                                  OccupancyType.find(:all, :order => 'name'),
+                                                  :id,
+                                                  :name,
+                                                  {:include_blank => true},
+                                                  :style => 'width:100%;') %>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <b>No answer at the door</b></td>
+              <td><%= bw_fields.check_box :no_door_answer %>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <b>Desired Path</b></td>
+              <td><%= bw_fields.collection_select(:broker_contact_response_type_id,
+                                                  BrokerContactResponseType.find(:all, :order => 'name'),
+                                                  :id,
+                                                  :name,
+                                                  {:include_blank => true},
+                                                  :style => 'width:100%;') %>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <b>Not eligible</b></td>
+              <td><%= bw_fields.check_box :ineligible %>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="">
+          <h4>Notes</h4>
+          <%= bw_fields.text_area :broker_summary_notes, :class => 'wiki-edit', :rows => 3, :maxlength => 1000 %>
+          <p class="charsRemaining"></p>
+        </div>
+        <h4><%= l(:label_attachment_plural) %></h4>
+
+        <div style="margin-left:-180px;"><%= link_to_attachments issue, {:author => issue.author} %></div>
+        <br/><%= render :partial => 'attachments/form' %>
+
+      </fieldset>
+    </div>
+<% end %>

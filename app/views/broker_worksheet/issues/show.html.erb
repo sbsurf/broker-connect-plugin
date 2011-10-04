@@ -1,0 +1,40 @@
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'plugin', :plugin => 'redmine_broker_connect', :media => 'all' %>
+    <%= stylesheet_link_tag 'print', :plugin => 'redmine_broker_connect', :media => 'print' %>
+<% end %>
+
+<%
+  if @issue.nil?
+        @issue = @broker_worksheet.issue
+        sidebar_excludes = [:issue_status_category, :issue_status, :watchers]
+        sidebar_includes = [:property, :borrower, :broker]
+        no_update = true
+    else
+        sidebar_excludes = [:issue_status_category]
+        sidebar_includes = [:property, :issue_status, :watchers, :borrower, :broker]
+        no_update = false
+    end
+%>
+
+<% loan_sidebar(@issue, @broker_worksheet.loan, @allowed_statuses, sidebar_excludes, sidebar_includes, {:broker_worksheet => @broker_worksheet} ) %>
+
+<div class="form">
+  <div class="header">
+    <h2><%= @issue.tracker.name %> - <%= @issue.subject %> <br> <%= @broker_worksheet.loan.andand.property.andand.street %>,
+      <%= @broker_worksheet.loan.andand.property.andand.city %> <%= @broker_worksheet.loan.andand.property.andand.state.andand.abbreviation %> <%= @broker_worksheet.loan.andand.property.andand.postal_code %></h2>
+    </div>
+  <%= render :partial => 'broker_worksheet/issues/form', :locals => {:broker_worksheet => @broker_worksheet, :no_update => no_update} %>
+</div>
+
+<div style="clear: both;"></div>
+
+<% html_title "#{@issue.tracker.name}: #{@issue.subject}" %>
+
+<% content_for :header_tags do %>
+    <%= auto_discovery_link_tag(:atom, {:format => 'atom', :key => User.current.rss_key}, :title => "#{@issue.project} - #{@issue.tracker} ##{@issue.id}: #{@issue.subject}") %>
+    <%= stylesheet_link_tag 'scm' %>
+    <%= javascript_include_tag 'context_menu' %>
+    <%= stylesheet_link_tag 'context_menu' %>
+<% end %>
+<div id="context-menu" style="display: none;"></div>
+<%= javascript_tag "new ContextMenu('#{url_for(:controller => 'issues', :action => 'context_menu')}')" %>

@@ -1,0 +1,26 @@
+
+<div id="property" class="box">
+  <fieldset>
+    <legend>Property</legend>
+    <p>
+        <h3>
+        <%= property.andand.street %>
+            <br>
+
+            <%= property.andand.city %> <%= property.andand.state.andand.abbreviation %>
+            <%= property.andand.postal_code %>
+        </h3>
+    </p>
+    <table>
+      <tr>
+        <td>Property Type</td> <td class="readonly-field"> <%= property.andand.property_type.nil? ? "Unknown" : property.property_type.name %></td>
+        <td>Property Usage Type</td> <td class="readonly-field"> <%= property.andand.property_usage_type.nil? ? "Unknown" : property.property_usage_type.name %></td>
+      </tr>
+      <tr></tr>
+      <tr>
+        <td>Occupancy</td> <td class="readonly-field"> <%= property.andand.occupancy.nil? ? "Unknown" : property.occupancy %></td>
+      </tr>
+    </table>
+
+  </fieldset>
+</div>

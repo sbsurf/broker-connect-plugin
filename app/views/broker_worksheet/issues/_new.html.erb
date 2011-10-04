@@ -1,0 +1,17 @@
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'plugin', :plugin => 'redmine_broker_connect', :media => 'all' %>
+<% end %>
+
+
+<% labelled_tabular_form_for :issue, @issue, :url => {:controller => 'issues', :action => 'create', :project_id => @project},
+                             :html => {:multipart => true, :id => "issue-form-#{tracker[:id]}"} do |f| %>
+
+    <%= hidden_field_tag 'issue[tracker_id]', tracker[:id] %>
+    <%= error_messages_for 'issue' %>
+    <div class="box">
+      <%= lookup_loan_field(:form_id => "issue-form-#{tracker[:id]}",
+                            :partial => 'broker_worksheet/lookup_loan_results_broker') %>
+    </div>
+    <%= submit_tag l(:button_create) %>
+    <%= javascript_tag "j$('#issue_subject').focus();" %>
+<% end %>

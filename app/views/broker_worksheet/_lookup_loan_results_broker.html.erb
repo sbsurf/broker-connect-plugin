@@ -1,0 +1,105 @@
+<%- if defined?(loan) and not loan.nil? %>
+<div class="box">
+  <h3>Loan Resolution Specialist</h3>
+  <%= select  'issue[broker_worksheet]',
+              'loan_resolution_specialist_id',
+              options_from_collection_for_select(LoanResolutionSpecialist.find(:all, :group => "name"),:id,:name) %>
+  <div>
+    <h4 id="broker_worksheet_cash_offered_label">Cash Offered</h4>
+    <%= text_field 'issue[broker_worksheet]', :cash_offered, {:value => 0} %>
+  </div>
+</div>
+<div class="box">
+  <h3><%= loan.borrower.andand.name || loan.property.andand.address_string %></h3>
+ <% if loan.borrower.andand.name %>
+  <p>
+    <%= loan.property.andand.street %><br/>
+    <%= loan.property.andand.city %>, <%= loan.property.andand.state.andand.abbreviation %>  <%= loan.property.andand.postal_code %><br/>
+  </p>
+ <% end %>
+  <div class="table">
+    <div class="row">
+      <div class="table column group">
+      	  <div class="row">
+            <h4 class="column">Lien Position</h4>
+            <p class="column"><%= loan.lien_position == 1 ? 'First Lien' : 'Second Lien' %></p>
+      	  </div>
+      	  <div class="row">
+            <h4 class="column">Lo Type</h4>
+            <p class="column"><%= loan.loan_type.description %></p>
+      	  </div>
+      	  <div class="row">
+            <h4 class="column">Product</h4>
+            <p class="column"><%= loan.product.andand.name %></p>
+      	  </div>
+      	  <div class="row">
+            <h4 class="column">Aquisition Code</h4>
+            <p class="column"><%= loan.acquisition_code %></p>
+      	  </div>
+      	  <div class="row">
+            <h4 class="column">Investor</h4>
+            <p class="column"><%= loan.investor.name %> (<%= loan.investor.code %>)</p>
+          </div>
+      </div>
+      <div class="table column group">
+      	  <div class="row">
+            <h4 class="column">Balance</h4>
+            <p class="column"><%= number_to_currency(loan.balance) %></p>
+      	  </div>
+        <% if loan.has_second? %>
+          <div class="row">
+            <h4 class="column">Combined Balance</h4>
+            <p class="column"><%= number_to_currency(loan.combined_balance) %></p>
+          </div>
+        <% end %>
+      	<% if not loan.borrower.nil? %>
+          <div class="row">
+            <h4 class="column">Credit Score</h4>
+            <p class="column"><%= loan.borrower.andand.credit_score %></p>
+          </div>
+        <% end %>
+      	  <div class="row">
+            <h4 class="column">Property Value</h4>
+            <p class="column"><%= number_to_currency(loan.property.andand.value || 0) %></p>
+      	  </div>
+      	  <div class="row">
+            <h4 class="column">LTV</h4>
+            <p class="column"><%= number_to_percentage(loan.ltv * 100, :precision => 2) %></p>
+      	  </div>
+        <% if loan.has_second? %>
+      	  <div class="row">
+            <h4 class="column">CLTV</h4>
+            <p class="column"><%= number_to_percentage(loan.cltv * 100, :precision => 2) %></p>
+      	  </div>
+        <% end %>
+      </div>
+      <div class="table column group">
+    	  <div class="row">
+    	    <h4 class="column">Next Payment Due</h4>
+    	    <p class="column"><%= loan.next_payment_due.andand.strftime('%b %d, %Y') %></p>
+    		</div>
+    	  <div class="row">
+    	    <h4 class="column">Rate</h4>
+    	    <p class="column"><%= number_to_percentage(loan.rate * 100, :precision => 3) %></p>
+    		</div>
+    		<div class="row">
+    			<h4 class="column">Term</h4>
+    			<p class="column"><%= loan.term %></p>
+    		</div>
+    		<div class="row">
+    			<h4 class="column">PI Payment</h4>
+    			<p class="column"><%= number_to_currency(loan.pi_payment) %></p>
+    		</div>
+    		<div class="row">
+    			<h4 class="column">TI Payment</h4>
+    			<p class="column"><%= number_to_currency(loan.ti_payment) %></p>
+    		</div>
+      		<div class="row">
+      			<h4 class="column">Total Payment</h4>
+      			<p class="column"><%= number_to_currency(loan.piti_payment) %></p>
+      		</div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end -%>

@@ -1,0 +1,3 @@
+page.replace_html   :broker_sidebar,
+                    :partial => 'broker_worksheet/broker_worksheet_sidebar',
+                    :locals => {:broker_worksheet => @broker_worksheet}

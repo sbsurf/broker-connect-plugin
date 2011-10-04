@@ -1,0 +1,1 @@
+require 'broker_connect/redmine/hooks/issue_hooks'

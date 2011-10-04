@@ -1,0 +1,39 @@
+<script type="text/javascript">
+  j$().ready(function() {
+    j$('a[rel=showDialog]').click(function(e) {
+      e.preventDefault();
+      var $this = $(this);
+      j$('<iframe id="dialog" class="dialog" style="padding: 0px; margin: 0px" src="' + this.href + '" />').dialog({
+              title: ($this.title) ? $this.title : '',
+              autoOpen: true,
+              modal: true,
+              autoResize: true,
+              resizeable: false,
+              show: "fade",
+              hide: "fade",
+              draggble: false,
+              height: 625,
+              width: 725
+          }).width(725).height(625);
+    });
+  });
+</script>
+
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'ui-lightness/jquery-ui-1.8.2.custom.css', :plugin => "redmine_broker_connect" %>
+<% end %>
+
+<% form_for :issue, @issue, :url => {:action => 'update', :id => @issue},
+                             :html => {:id => 'issue-form',
+                            :method => :post, :multipart=> true} do |f| %>
+<div class="tabular">
+ <%= render :partial => "broker_worksheet/issues/loan", :locals => {:loan => @broker_worksheet.loan}  %>
+ <%= render :partial => "broker_worksheet/issues/questions", :locals => {:broker_worksheet => @broker_worksheet, :issue => @issue, :form => f}%>
+  <br>
+  <% unless no_update %>
+  <%= submit_tag l(:button_update) %>
+  <% end %>
+</div>
+
+<% end %>
+
